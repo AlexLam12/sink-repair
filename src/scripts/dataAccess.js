@@ -27,6 +27,11 @@ export const sendRequest = (userServiceRequest) => {
     }
 
     const mainContainer = document.querySelector("#container");
+    // return fetch(`${API}/requests`, fetchOptions)
+    //     .then(response => response.json())
+    //     .then(() => {
+    //         // do something after the POST is finished. Stay tuned for what to put here!
+    //     })
 
     return fetch(`${API}/requests`, fetchOptions)
         .then(response => response.json())
@@ -35,11 +40,16 @@ export const sendRequest = (userServiceRequest) => {
             mainContainer.dispatchEvent(new CustomEvent("stateChanged"))
         })
 
-    // return fetch(`${API}/requests`, fetchOptions)
-    //     .then(response => response.json())
-    //     .then(() => {
-    //         // do something after the POST is finished. Stay tuned for what to put here!
-    //     })
 }
 
 export const getRequests = () => [...applicationState.requests]
+
+export const deleteRequest = (id) => {
+    const mainContainer = document.querySelector("#container");
+    return fetch(`${API}/requests/${id}`, { method: "DELETE" })
+        .then(
+            () => {
+                mainContainer.dispatchEvent(new CustomEvent("stateChanged"))
+            }
+        )
+}
